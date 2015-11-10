@@ -2,7 +2,7 @@
 
 ## Description
 
-:fish_cake: A simple and lightweight Javascript function to load your ajax content using HTML data-* attribute.
+A simple and lightweight Javascript function to load your ajax content using HTML data-* attribute.
 
 ## Dependencies
 
