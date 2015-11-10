@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function(){
   /**
    * Ajax Load
    */
-  var ajaxLoad = function( content, container, transition ){
+  var ajaxLoad = function( content, container, callback ){
     containerNode = document.querySelectorAll( container );
     // Ajax get
     var request = new XMLHttpRequest();
@@ -19,15 +19,20 @@ document.addEventListener('DOMContentLoaded', function(){
         // Success!
         var ajaxData = request.responseText;
         for ( var i = 0; i < containerNode.length; i++ ) {
-          containerNode[i].innerHTML = ajaxData;
+          var el = containerNode[i];
+          el.classList.add('ajax-loaded');
+          el.innerHTML = ajaxData;
+        }
+        if ( callback ) {
+          callback();
         }
       } else {
         // Fail
-        alert('Houve um erro ao carregar o conteúdo.');
+        console.log( request.status );
       }
     }
     request.onerror = function(){
-      alert('Houve um erro ao carregar o conteúdo.');
+      console.log( request.status );
     }
     request.send();
   }
@@ -37,10 +42,18 @@ document.addEventListener('DOMContentLoaded', function(){
   /**
    * Ajax destroy
    */
-  var ajaxDestroy = function( target, transition ){
+  var ajaxDestroy = function( target, callback ){
     targetNode = document.querySelectorAll( target );
     for ( var i = 0; i < targetNode.length; i++ ) {
-      targetNode[i].innerHTML = '';
+      var el = targetNode[i];
+      el.classList.remove('ajax-loaded');
+      el.classList.add('ajax-destroyed');
+      setTimeout(function(){
+        el.innerHTML = '';
+      }, 1000);
+    }
+    if ( callback ) {
+      callback();
     }
   }
   window.ajaxDestroy = ajaxDestroy;
@@ -57,12 +70,11 @@ document.addEventListener('DOMContentLoaded', function(){
       dataLoadNode[i].addEventListener('click', function( event ) {
         event.preventDefault();
         // Get the attributes
-        var content    = this.getAttribute('href'),
-            container  = this.getAttribute('data-ajax-load'),
-            transition = this.getAttribute( 'data-ajax-transition' ),
-            callback   = this.getAttribute( 'data-ajax-callback' );
+        var content   = this.getAttribute('href'),
+            container = this.getAttribute('data-ajax-load'),
+            callback  = this.getAttribute( 'data-ajax-callback' );
         // Call 'ajaxLoad' function
-        ajaxLoad( content, container, transition );
+        ajaxLoad( content, container, callback );
       });
     }
   }() );
@@ -79,11 +91,10 @@ document.addEventListener('DOMContentLoaded', function(){
       ajaxDestroyNode[i].addEventListener('click', function(event) {
         event.preventDefault();
         // Get the attributes
-        var target     = this.getAttribute('data-ajax-destroy'),
-            transition = this.getAttribute('data-ajax-transition'),
-            callback   = this.getAttribute('data-ajax-callback');
+        var target   = this.getAttribute('data-ajax-destroy'),
+            callback = this.getAttribute('data-ajax-callback');
         // Call 'ajaxDestroy' function
-        ajaxDestroy( target, transition );
+        ajaxDestroy( target, callback );
       });
     }
   }() );
@@ -98,13 +109,12 @@ document.addEventListener('DOMContentLoaded', function(){
     for (var i = 0; i < ajaxInitNode.length; i++) {
       // Get the attributes
       var el = ajaxInitNode[i];
-      var content    = el.getAttribute('href'),
-          container  = el.getAttribute('data-ajax-load'),
-          transition = el.getAttribute('data-ajax-transition'),
-          callback   = el.getAttribute('data-ajax-callback');
+      var content   = el.getAttribute('href'),
+          container = el.getAttribute('data-ajax-load'),
+          callback  = el.getAttribute('data-ajax-callback');
 
       // Call 'ajaxLoad' function
-      ajaxLoad( content, container, transition );
+      ajaxLoad( content, container, callback );
     }
   }() );
 
