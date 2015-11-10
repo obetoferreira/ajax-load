@@ -1,4 +1,4 @@
-# :fish_cake: ajax-load v1.0.0
+# :fish_cake: ajax-load v1.0.1
 
 ## Description
 
@@ -6,13 +6,13 @@
 
 ## Dependencies
 
-* Jquery (Temporarily)
+* Coffee and love.
 
 ## Quick start
 
-1. Copy ajax-load.js into your project
+1. Copy ajax-load.min.js (located at /dist folder) into your project
 2. Then, before your closing `<body>` tag add:
-`<script type="text/javascript" src="/your/path/to/fle/ajax-load.js"></script>`
+`<script type="text/javascript" src="/your/path/to/fle/ajax-load.min.js"></script>`
 3. Enjoy!
 
 ## Features
@@ -22,19 +22,17 @@
 * Trigger action on click
 * Trigger action on load page
 * Destroy previously loaded content
-* Smooth transitions
 * Callbacks
 
 ## Usage
 
 Ajax Load
-`<a href="#content-link-goes-here" data-ajax-load="#container-id-goes-here" data-ajax-transition="fade/slide/empty" data-ajax-callback="yourCallbackFunction()">Load content</a>`
+`<a href="#content-link-goes-here" data-ajax-load="#container-id-goes-here" data-ajax-callback="yourCallbackFunction()">Load content</a>`
 
 Ajax Destroy
-`<button type="button" data-ajax-destroy="#item-id-goes-here" data-ajax-transition="fade/slide/empty" data-ajax-callback="yourCallbackFunction()">Destroy item</button>`
+`<button type="button" data-ajax-destroy="#item-id-goes-here" data-ajax-callback="yourCallbackFunction()">Destroy item</button>`
 
 ## Todo
 
-- Rebuild in pure Javascript
 - Use it as plugin
 - Improve documentation
